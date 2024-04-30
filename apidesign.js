@@ -1,19 +1,14 @@
-// Import required modules
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Create Express application
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Sample data: in-memory task storage
 let tasks = [];
 let taskId = 1;
 
-// Middleware to parse JSON bodies
 app.use(bodyParser.json());
 
-// Route for creating a new task
 app.post('/tasks', (req, res) => {
     const { title, description } = req.body;
     const newTask = {
@@ -27,12 +22,10 @@ app.post('/tasks', (req, res) => {
     res.status(201).json(newTask);
 });
 
-// Route for retrieving all tasks
 app.get('/tasks', (req, res) => {
     res.json(tasks);
 });
 
-// Route for retrieving a specific task by ID
 app.get('/tasks/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const task = tasks.find(task => task.id === id);
@@ -43,7 +36,6 @@ app.get('/tasks/:id', (req, res) => {
     }
 });
 
-// Route for updating a specific task by ID
 app.put('/tasks/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const { title, description } = req.body;
@@ -61,7 +53,6 @@ app.put('/tasks/:id', (req, res) => {
     }
 });
 
-// Route for deleting a specific task by ID
 app.delete('/tasks/:id', (req, res) => {
     const id = parseInt(req.params.id);
     const initialLength = tasks.length;
@@ -73,7 +64,6 @@ app.delete('/tasks/:id', (req, res) => {
     }
 });
 
-// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
